@@ -19,6 +19,10 @@ public class OrderPaymentDemand {
     @Id
     private Long id;
 
+    private String price;
+
+    private String unit;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime expiredAt;

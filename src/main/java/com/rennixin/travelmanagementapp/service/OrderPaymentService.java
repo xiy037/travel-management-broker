@@ -1,6 +1,8 @@
 package com.rennixin.travelmanagementapp.service;
 
+import com.rennixin.travelmanagementapp.client.FinanceClient;
 import com.rennixin.travelmanagementapp.dtos.OrderPaymentRequest;
+import com.rennixin.travelmanagementapp.dtos.RecordDto;
 import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
 import com.rennixin.travelmanagementapp.exception.OrderNotFoundException;
 import com.rennixin.travelmanagementapp.repository.OrderPaymentDemandRepository;
@@ -13,21 +15,25 @@ import java.time.LocalDateTime;
 public class OrderPaymentService {
     private final OrderPaymentDemandRepository orderPaymentDemandRepository;
     private final OrderRepository orderRepository;
+    private final FinanceClient financeClient;
 
     public OrderPaymentService(OrderPaymentDemandRepository orderPaymentDemandRepository,
-                               OrderRepository orderRepository) {
+                               OrderRepository orderRepository, FinanceClient financeClient) {
         this.orderPaymentDemandRepository = orderPaymentDemandRepository;
         this.orderRepository = orderRepository;
+        this.financeClient = financeClient;
     }
 
     public OrderPaymentDemand createOrderPaymentDemand(Long orderId, OrderPaymentRequest request) {
         boolean orderExists = orderRepository.existsById(orderId);
         if (orderExists) {
-            //TODO: check record id
+            RecordDto record = financeClient.getRecord(request.getRecordId());
 
             LocalDateTime createdAt = LocalDateTime.now();
             LocalDateTime expiredAt = createdAt.plusDays(1);
             OrderPaymentDemand demand = OrderPaymentDemand.builder()
+                    .price(record.getPrice())
+                    .unit(record.getUnit())
                     .createdAt(createdAt)
                     .expiredAt(expiredAt)
                     .build();
