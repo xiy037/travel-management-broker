@@ -22,7 +22,7 @@ public class OrderPaymentController {
 
     @PostMapping("/orders/{id}/payments")
     public OrderPaymentResponse createPaymentDemand(@PathVariable("id") Long orderId,
-                                                    @RequestBody @Valid OrderPaymentRequest orderPaymentRequest) throws Exception {
+                                                    @RequestBody @Valid OrderPaymentRequest orderPaymentRequest){
         var demand = orderPaymentService.createOrderPaymentDemand(orderId, orderPaymentRequest);
         return OrderPaymentResponse.builder()
                 .id(demand.getId())
