@@ -26,7 +26,6 @@ public class OrderPaymentService {
     }
 
     public OrderPaymentDemand createOrderPaymentDemand(Long orderId, OrderPaymentRequest request) {
-        orderRepository.save(Order.builder().clientId("111").clientName("eeee").build());
         boolean orderExists = orderRepository.existsById(orderId);
         if (orderExists) {
             RecordDto record = financeClient.getRecord(request.getRecordId());

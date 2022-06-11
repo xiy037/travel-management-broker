@@ -7,12 +7,13 @@ import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
 import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
 import com.rennixin.travelmanagementapp.repository.OrderPaymentDemandRepository;
 import com.rennixin.travelmanagementapp.repository.OrderRepository;
-import org.junit.jupiter.api.AfterEach;
+import feign.FeignException;
+import feign.Request;
+import feign.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -58,8 +59,8 @@ public class OrderPaymentServiceTest {
                 .expiredAt(LocalDateTime.of(2022, 06, 10, 0, 0))
                 .build();
 
-        when(financeClient.getRecord(recordId)).thenReturn(record);
         when(orderRepository.existsById(orderId)).thenReturn(true);
+        when(financeClient.getRecord(recordId)).thenReturn(record);
         when(orderPaymentDemandRepository.save(any())).thenReturn(savedEntity);
 
         OrderPaymentDemand result = orderPaymentService.createOrderPaymentDemand(orderId, request);
@@ -78,6 +79,22 @@ public class OrderPaymentServiceTest {
             orderPaymentService.createOrderPaymentDemand(orderId, request);
         });
         assertThat(thrownException.getMessage()).isEqualTo("order not found");
+    }
+
+    @Test
+    void should_throw_entity_not_found_exception_when_record_not_existed() {
+        long orderId = 10009l;
+        OrderPaymentRequest request = OrderPaymentRequest.builder().recordId(111l).build();
+
+        when(orderRepository.existsById(orderId)).thenReturn(true);
+        when(financeClient.getRecord(111l))
+                .thenThrow(new EntityNotFoundException("record not found"));
+
+        EntityNotFoundException thrownException = assertThrows(EntityNotFoundException.class, () -> {
+            orderPaymentService.createOrderPaymentDemand(orderId, request);
+        });
+
+        assertThat(thrownException.getMessage()).isEqualTo("record not found");
     }
 
 

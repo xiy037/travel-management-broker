@@ -1,0 +1,93 @@
+{
+  "mappings" : [ {
+    "id" : "aa8abf9a-0ae9-49de-b415-6e47e25b89b8",
+    "name" : "get record successfully",
+    "request" : {
+      "urlPath" : "/monthly-receipts/20",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"id\": 20,\n  \"price\": \"12899\",\n  \"unit\": \"CNY\"\n}",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "aa8abf9a-0ae9-49de-b415-6e47e25b89b8",
+    "persistent" : true,
+    "priority" : 3,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2022-06-11T18:49:55.504019724Z",
+          "via" : "ADMIN_API",
+          "by" : "jrq1w"
+        },
+        "updated" : {
+          "at" : "2022-06-11T19:04:46.578358757Z",
+          "via" : "ADMIN_API",
+          "by" : "jrq1w"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "78f6a478-44ab-47bd-8acd-ee54d5287274",
+    "name" : "get 404",
+    "request" : {
+      "url" : "/monthly-receipts/111",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 404,
+      "body" : "\nnot found\n",
+      "headers" : { }
+    },
+    "uuid" : "78f6a478-44ab-47bd-8acd-ee54d5287274",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2022-06-11T19:06:06.157885644Z",
+          "via" : "ADMIN_API",
+          "by" : "jrq1w"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "8c4ca104-ad1e-4012-951c-bca6cdff36f0",
+    "name" : "mock record stub other error",
+    "request" : {
+      "url" : "/monthly-receipts/222",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 503,
+      "body" : "\nBody content for stub 10\n\n",
+      "headers" : { }
+    },
+    "uuid" : "8c4ca104-ad1e-4012-951c-bca6cdff36f0",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2022-06-11T18:55:29.398566791Z",
+          "via" : "ADMIN_API",
+          "by" : "jrq1w"
+        },
+        "updated" : {
+          "at" : "2022-06-11T18:56:29.285291225Z",
+          "via" : "ADMIN_API",
+          "by" : "jrq1w"
+        }
+      }
+    },
+    "postServeActions" : [ ]
+  } ],
+  "meta" : {
+    "total" : 3
+  }
+}
