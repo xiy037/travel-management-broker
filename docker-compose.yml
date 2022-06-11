@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: mysql:8.0.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: travel_management
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
