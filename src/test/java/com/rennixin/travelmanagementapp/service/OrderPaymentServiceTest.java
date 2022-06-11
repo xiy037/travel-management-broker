@@ -4,16 +4,20 @@ import com.rennixin.travelmanagementapp.client.FinanceClient;
 import com.rennixin.travelmanagementapp.dtos.OrderPaymentRequest;
 import com.rennixin.travelmanagementapp.dtos.RecordDto;
 import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
+import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
 import com.rennixin.travelmanagementapp.repository.OrderPaymentDemandRepository;
 import com.rennixin.travelmanagementapp.repository.OrderRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,7 +63,21 @@ public class OrderPaymentServiceTest {
         when(orderPaymentDemandRepository.save(any())).thenReturn(savedEntity);
 
         OrderPaymentDemand result = orderPaymentService.createOrderPaymentDemand(orderId, request);
+
         assertThat(result).isEqualTo(savedEntity);
+    }
+
+    @Test
+    void should_throw_entity_not_found_exception_when_order_not_existed() {
+        long orderId = 10009l;
+        OrderPaymentRequest request = OrderPaymentRequest.builder().recordId(111l).build();
+
+        when(orderRepository.existsById(orderId)).thenReturn(false);
+
+        EntityNotFoundException thrownException = assertThrows(EntityNotFoundException.class, () -> {
+            orderPaymentService.createOrderPaymentDemand(orderId, request);
+        });
+        assertThat(thrownException.getMessage()).isEqualTo("order not found");
     }
 
 
