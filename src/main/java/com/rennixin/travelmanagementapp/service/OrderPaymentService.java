@@ -3,8 +3,9 @@ package com.rennixin.travelmanagementapp.service;
 import com.rennixin.travelmanagementapp.client.FinanceClient;
 import com.rennixin.travelmanagementapp.dtos.OrderPaymentRequest;
 import com.rennixin.travelmanagementapp.dtos.RecordDto;
+import com.rennixin.travelmanagementapp.entity.Order;
 import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
-import com.rennixin.travelmanagementapp.exception.OrderNotFoundException;
+import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
 import com.rennixin.travelmanagementapp.repository.OrderPaymentDemandRepository;
 import com.rennixin.travelmanagementapp.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class OrderPaymentService {
     }
 
     public OrderPaymentDemand createOrderPaymentDemand(Long orderId, OrderPaymentRequest request) {
+        orderRepository.save(Order.builder().clientId("111").clientName("eeee").build());
         boolean orderExists = orderRepository.existsById(orderId);
         if (orderExists) {
             RecordDto record = financeClient.getRecord(request.getRecordId());
@@ -39,7 +41,7 @@ public class OrderPaymentService {
                     .build();
             return orderPaymentDemandRepository.save(demand);
         } else {
-            throw new OrderNotFoundException("order not found");
+            throw new EntityNotFoundException("order not found");
         }
     }
 }
