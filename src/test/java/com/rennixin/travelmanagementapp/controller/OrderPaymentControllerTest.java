@@ -87,4 +87,22 @@ public class OrderPaymentControllerTest {
 
     }
 
+    @Test
+    public void should_return_400_when_record_id_not_sent() throws Exception {
+        long orderId = 1000009l;
+        OrderPaymentRequest request = OrderPaymentRequest.builder().build();
+
+        when(orderPaymentService.createOrderPaymentDemand(any(), any()))
+                .thenReturn(OrderPaymentDemand.builder().build());
+
+        MockHttpServletRequestBuilder requestBuilder = post("/orders/{id}/payments", orderId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(orderPaymentJson.write(request).getJson());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message", is("recordId cannot be null")));
+    }
+
 }

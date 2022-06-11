@@ -12,6 +12,6 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Data
 public class OrderPaymentRequest {
-    @NotNull
+    @NotNull(message = "recordId cannot be null")
     private Long recordId;
 }
