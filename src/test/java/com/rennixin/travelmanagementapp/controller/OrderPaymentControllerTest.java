@@ -3,6 +3,7 @@ package com.rennixin.travelmanagementapp.controller;
 import com.rennixin.travelmanagementapp.dtos.OrderPaymentRequest;
 import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
 import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
+import com.rennixin.travelmanagementapp.exception.ServiceUnavailableException;
 import com.rennixin.travelmanagementapp.service.OrderPaymentService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -103,6 +103,24 @@ public class OrderPaymentControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message", is("recordId cannot be null")));
+    }
+
+    @Test
+    public void should_return_503_when_service_unavailable_exception_is_thrown() throws Exception {
+        long orderId = 1000009l;
+        OrderPaymentRequest request = OrderPaymentRequest.builder().recordId(100l).build();
+
+        when(orderPaymentService.createOrderPaymentDemand(any(), any()))
+                .thenThrow(new ServiceUnavailableException("record service unavailable"));
+
+        MockHttpServletRequestBuilder requestBuilder = post("/orders/{id}/payments", orderId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(orderPaymentJson.write(request).getJson());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message", is("record service unavailable")));
     }
 
 }

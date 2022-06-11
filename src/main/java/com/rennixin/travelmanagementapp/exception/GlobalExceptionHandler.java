@@ -23,4 +23,11 @@ public class GlobalExceptionHandler {
         ApiErrorDto errorResult = new ApiErrorDto(message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
     }
+
+    @ExceptionHandler(ServiceUnavailableException.class)
+    public ResponseEntity<ApiErrorDto> handle(ServiceUnavailableException ex) {
+        ApiErrorDto errorResult = new ApiErrorDto(
+                ex.getMessage());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(errorResult);
+    }
 }

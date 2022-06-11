@@ -14,7 +14,7 @@ public class RecordErrorDecoder implements ErrorDecoder {
             case 404:
                 return new EntityNotFoundException("record not found");
             default:
-                return new ServiceUnavailableException();
+                return new ServiceUnavailableException("record service unavailable");
         }
     }
 }
