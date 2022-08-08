@@ -1,7 +1,6 @@
-package com.rennixin.travelmanagementapp.Repository;
+package com.rennixin.travelmanagementapp.data;
 
 import com.rennixin.travelmanagementapp.entity.Order;
-import com.rennixin.travelmanagementapp.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

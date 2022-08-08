@@ -1,4 +1,4 @@
-package com.rennixin.travelmanagementapp.client;
+package com.rennixin.travelmanagementapp.data.client;
 
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;

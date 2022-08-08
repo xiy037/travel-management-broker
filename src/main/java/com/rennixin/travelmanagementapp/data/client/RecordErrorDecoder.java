@@ -1,4 +1,4 @@
-package com.rennixin.travelmanagementapp.client;
+package com.rennixin.travelmanagementapp.data.client;
 
 import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
 import feign.Response;

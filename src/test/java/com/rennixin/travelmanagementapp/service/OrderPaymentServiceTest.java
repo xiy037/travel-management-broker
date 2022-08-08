@@ -1,15 +1,12 @@
 package com.rennixin.travelmanagementapp.service;
 
-import com.rennixin.travelmanagementapp.client.FinanceClient;
+import com.rennixin.travelmanagementapp.data.client.FinanceClient;
 import com.rennixin.travelmanagementapp.dtos.OrderPaymentRequest;
 import com.rennixin.travelmanagementapp.dtos.RecordDto;
 import com.rennixin.travelmanagementapp.entity.OrderPaymentDemand;
 import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
-import com.rennixin.travelmanagementapp.repository.OrderPaymentDemandRepository;
-import com.rennixin.travelmanagementapp.repository.OrderRepository;
-import feign.FeignException;
-import feign.Request;
-import feign.Response;
+import com.rennixin.travelmanagementapp.data.OrderPaymentDemandRepository;
+import com.rennixin.travelmanagementapp.data.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

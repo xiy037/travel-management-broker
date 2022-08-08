@@ -1,4 +1,4 @@
-package com.rennixin.travelmanagementapp.client;
+package com.rennixin.travelmanagementapp.data.client;
 
 import com.rennixin.travelmanagementapp.dtos.RecordDto;
 import org.springframework.cloud.openfeign.FeignClient;
