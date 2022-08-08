@@ -1,10 +1,9 @@
 package com.rennixin.travelmanagementapp.data.client;
 
 import com.rennixin.travelmanagementapp.exception.EntityNotFoundException;
+import com.rennixin.travelmanagementapp.exception.ServiceUnavailableException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-
-import javax.naming.ServiceUnavailableException;
 
 public class RecordErrorDecoder implements ErrorDecoder {
 

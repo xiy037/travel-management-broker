@@ -1,0 +1,54 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPath": "/monthly-receipts/200",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "id": 20,
+          "price": "12899",
+          "unit": "CNY"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "url": "/monthly-receipts/111",
+        "method": "GET"
+      },
+      "response": {
+        "status": 404,
+        "jsonBody": {
+          "error": 404,
+          "message": "record not found"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "url": "/monthly-receipts/100",
+        "method": "GET"
+      },
+      "response": {
+        "status": 503,
+        "jsonBody": {
+          "error": 503,
+          "message": "service unavailable"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+
+  ]
+}
